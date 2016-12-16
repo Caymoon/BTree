@@ -2,42 +2,22 @@
  * Created by gblau on 2016-12-04.
  * Copyright (c) Chung Tsing(gblau) 2016. All rights reserved.
  */
-#include <stdbool.h>
 
 #ifndef B_TREE_BTREE_H
 #define B_TREE_BTREE_H
-//最大子树数
-#define MAX_STAIRS 3
+
+#include "linklist.h"
+#define BTREELENGTH 50
+#define BTLEN (sizeof(Node))
+
 #endif //B_TREE_BTREE_H
 
-//自定义key类型
-typedef int Key;
-
-/**
- * B树的基本节点
- */
-typedef struct node {
-    int keyNum;
-    Key keyArray[MAX_STAIRS+1];
-    struct node *parent;
-    struct node *childArray[MAX_STAIRS+1];
-
-}Node, *BTree;
-
-/**
- * 封装查找返回的信息
- */
-typedef struct result {
-    BTree pt;
-    int i;
-    int tag;
-}ResultVo;
 
 /**
  * 树的初始化
- * @param tree
+ * @param treePtr
  */
-void initBTree(BTree *tree);
+void initBTree(BTree *treePtr);
 
 /**
  * 判断一个节点是否有数据
@@ -57,13 +37,34 @@ bool isFull(const BTree tree);
 int getKeyNumber(const BTree tree);
 
 /**
+ * 寻找逼树最大节点
+ * @param tree
+ * @return
+ */
+BTree findMax(const BTree tree);
+
+/**
+ * 寻找逼树最大节点的keyNum
+ * @param tree
+ * @return
+ */
+int findMaxNum(BTree tree);
+
+/**
+ * 最小节点
+ * @param tree
+ * @return
+ */
+BTree findMin(BTree tree);
+
+/**
  * 插入一阶数据
  * @param tree
  * @param key
  * @param q
  * @param i
  */
-void insertNode(BTree *tree, int key, BTree q, int i);
+bool insertBTree(BTree *tree, Record record);
 
 /**
  * 搜索指定数据
@@ -78,10 +79,4 @@ ResultVo searchNode(const BTree tree, int key);
  * @param tree
  * @param i
  */
-void deleteNode(BTree *tree, int i);
-
-
-
-
-
-
+bool deleteNode(BTree *tree, int i);
